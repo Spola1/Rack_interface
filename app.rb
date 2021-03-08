@@ -21,13 +21,13 @@ class App
   end
 
   def process_params(params)
-     timeformatter = TimeFormatter.new(params.split(','))
-     timeformatter.call
+     tf = TimeFormatter.new(params.split(','))
+     tf.call
 
-     if timeformatter.success?
-       response(timeformatter.time, 200)
+     if tf.valid?
+       response(tf.time, 200)
      else
-       response(timeformatter.invalid_params, 400)
+       response(tf.invalid_params, 400)
      end
    end
 end

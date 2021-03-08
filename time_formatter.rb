@@ -1,13 +1,8 @@
 class TimeFormatter
 
-  DESIGNATION = {
-    'year': "%Y",
-    'month': "%m",
-    'day': "%d",
-    'hour': "%H",
-    'minute': "%m",
-    'second': "%S"
-   }
+  DESIGNATION = {'year'=> '%Y', 'month'=> '%m', 'day'=> '%d', 'hour'=> '%H', 'minute'=> '%m', 'second'=> '%S'}
+
+  attr_reader :params
 
   def initialize(params)
     @params = params.split(',')
@@ -25,8 +20,8 @@ class TimeFormatter
     end
   end
 
-  def success?
-    @invalid.empty?
+  def valid?
+    invalid_params.empty?
   end
 
   def time
