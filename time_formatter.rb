@@ -6,20 +6,29 @@ class TimeFormatter
 
   def initialize(params)
     @params = params.split(',')
+    @valid = []
+    @invalid = []
   end
 
-  def time
-    body = self.params.reduce('') { |body_box, param| body_box << DESIGNATION[param] }
-    body = body.split('').join('-')
-    Time.now.strftime(body)
-  end
-
-  def invalid_params
-    self.params - DESIGNATION.keys
+  def call
+    @params.each do |param|
+      if DESIGNATION[param.to_sym]
+        @valid << DESIGNATION[param.to_sym]
+      else
+        @invalid << param
+      end
+    end
   end
 
   def valid?
     invalid_params.empty?
   end
 
+  def time
+    Time.now.strftime(@valid*"-")
+  end
+
+  def invalid_params
+    "Unknown time format " + @invalid.to_s
+  end
 end
