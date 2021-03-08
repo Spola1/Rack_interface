@@ -21,7 +21,7 @@ class TimeFormatter
   end
 
   def valid?
-    invalid_params.empty?
+    @invalid.empty?
   end
 
   def time
