@@ -2,33 +2,22 @@ class TimeFormatter
 
   DESIGNATION = {'year'=> '%Y', 'month'=> '%m', 'day'=> '%d', 'hour'=> '%H', 'minute'=> '%m', 'second'=> '%S'}
 
-  attr_reader :params
-
   def initialize(params)
     @params = params.split(',')
-    @valid = []
-    @invalid = []
   end
 
-  def call
-    @params.each do |param|
-      if DESIGNATION[param.to_sym]
-        @valid << DESIGNATION[param.to_sym]
-      else
-        @invalid << param
-      end
-    end
+  def time
+    body = self.params.reduce('') { |body_box, param| body_box << DESIGNATION[param] }
+    body = body.split('').join('-')
+    Time.now.strftime(body)
   end
 
   def valid?
     @invalid.empty?
   end
 
-  def time
-    Time.now.strftime(@valid*"-")
+  def valid?
+    invalid_params.empty?
   end
 
-  def invalid_params
-    "Unknown time format " + @invalid.to_s
-  end
 end
